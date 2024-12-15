@@ -1,6 +1,7 @@
 {
   "name": "ts-case-transformer",
   "version": "1.0.0",
+  "description": "A TypeScript utility for transforming object keys between different case styles with full type safety",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -8,7 +9,38 @@
   ],
   "scripts": {
     "build": "tsc",
-    "prepare": "npm run build",
-    "start": "ts-node src/test.ts"
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "typescript",
+    "case",
+    "transform",
+    "camelcase",
+    "snakecase",
+    "kebabcase",
+    "pascalcase",
+    "case-transformer",
+    "object-keys",
+    "type-safe",
+    "change-case",
+    "changecase"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sefashngl/ts-case-transformer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sefashngl/ts-case-transformer/issues"
+  },
+  "homepage": "https://github.com/sefashngl/ts-case-transformer#readme",
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "ts-node": "^10.9.0",
+    "@types/node": "^20.0.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
   }
 }
