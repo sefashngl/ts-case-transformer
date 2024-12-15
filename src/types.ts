@@ -1,5 +1,14 @@
 // src/types.ts
-export type CaseType = 'camel' | 'snake' | 'kebab' | 'pascal';
+export type CaseType = 
+  | 'camelCase' 
+  | 'snake_case' 
+  | 'kebab-case' 
+  | 'PascalCase'
+  | 'flatcase'
+  | 'UPPERFLATCASE'
+  | 'Pascal_Snake_Case'
+  | 'camel_Snake_Case'
+  | 'SCREAMING_SNAKE_CASE';
 
 // First normalize the string by converting it to words
 type WordSeparators = '-' | '_' | ' ' | '.';
@@ -51,20 +60,71 @@ type ToPascalWords<Words extends string[]> = Words extends [
   ? `${Capitalize<Lowercase<First>>}${ToPascalWords<Rest>}`
   : '';
 
+// Add new case transformation utilities
+type ToFlatWords<Words extends string[]> = Words extends [
+  infer First extends string,
+  ...infer Rest extends string[]
+]
+  ? `${Lowercase<First>}${ToFlatWords<Rest>}`
+  : '';
+
+type ToUpperFlatWords<Words extends string[]> = Words extends [
+  infer First extends string,
+  ...infer Rest extends string[]
+]
+  ? `${Uppercase<First>}${ToUpperFlatWords<Rest>}`
+  : '';
+
+type ToPascalSnakeWords<Words extends string[]> = Words extends [
+  infer First extends string,
+  ...infer Rest extends string[]
+]
+  ? `${Capitalize<Lowercase<First>>}${Rest extends [] ? '' : `_${ToPascalSnakeWords<Rest>}`}`
+  : '';
+
+type ToCamelSnakeWords<Words extends string[]> = Words extends [
+  infer First extends string,
+  ...infer Rest extends string[]
+]
+  ? `${Lowercase<First>}${Rest extends [] ? '' : `_${ToPascalSnakeWords<Rest>}`}`
+  : '';
+
+type ToScreamingSnakeWords<Words extends string[]> = Words extends [
+  infer First extends string,
+  ...infer Rest extends string[]
+]
+  ? `${Uppercase<First>}${Rest extends [] ? '' : `_${ToScreamingSnakeWords<Rest>}`}`
+  : '';
+
 // Main case transformation types
 export type ToCamelCase<S extends string> = ToCamelWords<SplitWords<S>>;
 export type ToSnakeCase<S extends string> = ToSnakeWords<SplitWords<S>>;
 export type ToKebabCase<S extends string> = ToKebabWords<SplitWords<S>>;
 export type ToPascalCase<S extends string> = ToPascalWords<SplitWords<S>>;
+export type ToFlatCase<S extends string> = ToFlatWords<SplitWords<S>>;
+export type ToUpperFlatCase<S extends string> = ToUpperFlatWords<SplitWords<S>>;
+export type ToPascalSnakeCase<S extends string> = ToPascalSnakeWords<SplitWords<S>>;
+export type ToCamelSnakeCase<S extends string> = ToCamelSnakeWords<SplitWords<S>>;
+export type ToScreamingSnakeCase<S extends string> = ToScreamingSnakeWords<SplitWords<S>>;
 
-type CaseMapping<S extends string, C extends CaseType> = C extends 'camel'
+type CaseMapping<S extends string, C extends CaseType> = C extends 'camelCase'
   ? ToCamelCase<S>
-  : C extends 'snake'
+  : C extends 'snake_case'
   ? ToSnakeCase<S>
-  : C extends 'kebab'
+  : C extends 'kebab-case'
   ? ToKebabCase<S>
-  : C extends 'pascal'
+  : C extends 'PascalCase'
   ? ToPascalCase<S>
+  : C extends 'flatcase'
+  ? ToFlatCase<S>
+  : C extends 'UPPERFLATCASE'
+  ? ToUpperFlatCase<S>
+  : C extends 'Pascal_Snake_Case'
+  ? ToPascalSnakeCase<S>
+  : C extends 'camel_Snake_Case'
+  ? ToCamelSnakeCase<S>
+  : C extends 'SCREAMING_SNAKE_CASE'
+  ? ToScreamingSnakeCase<S>
   : never;
 
 export type Transformers = {

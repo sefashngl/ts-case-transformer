@@ -1,3 +1,4 @@
+// src/test.ts
 import { transformKeys } from ".";
 
 // Example usage:
@@ -6,7 +7,7 @@ const input = {
   "user-age": 30,
   nested_object: {
     first_name: "John",
-    last_name: "Doe",
+    "last-name": "Doe",
     nested_object: {
       nested_object: "nested-object",
       one_more_nested_object: {
@@ -17,16 +18,5 @@ const input = {
   some_array: [{ item_id: 1 }, { item_id: 2 }],
 };
 
-// To camelCase (default)
-const camelCase = transformKeys(input);
-
-// To snakeCase
-const snakeCase = transformKeys(input, "snake");
-
-// To kebabCase
-const kebabCase = transformKeys(input, "kebab");
-
-// To PascalCase
-const pascalCase = transformKeys(input, "pascal");
-
-console.log(JSON.stringify({ camelCase, snakeCase, kebabCase, pascalCase }, null, 1));
+const test = transformKeys([{ sefa: 'sefa' }, { test: 123}], 'UPPERFLATCASE');
+console.log(JSON.stringify(test, null, 2));
