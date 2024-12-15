@@ -79,7 +79,7 @@ const transformers: Transformers = {
   SCREAMING_SNAKE_CASE: toScreamingSnakeCase,
 } as const;
 
-export function transformKeys<
+function transformKeys<
   T extends object | Array<any>,
   C extends CaseType = "camelCase"
 >(obj: T, caseType: C = "camelCase" as C): TransformObjectKeys<T, C> {
@@ -105,3 +105,6 @@ export function transformKeys<
     };
   }, {}) as TransformObjectKeys<T, C>;
 }
+
+export { transformKeys };
+export type { TransformObjectKeys } from "./types";
